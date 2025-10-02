@@ -62,12 +62,23 @@ describe("Employee API Endpoints", () => {
     expect(res.status).toBe(200);
     expect(res.body.phone).toBe("111-222-3333");
   });
-  
+
   // 7️ Update Employee - no data
   it("should return 400 when updating with no data", async () => {
     const res = await request(app).put(`/api/v1/employees/${employeeId}`).send({});
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty("message", "No update data provided");
+  });
+
+   // 8️ Update Employee - not found
+  it("should return 404 when updating a non-existent employee", async () => {
+    const res = await request(app)
+      .put("/api/v1/employees/99999")
+      .send({ phone: "000-000-0000" });
+
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message", "Employee not found");
   });})
+
 
 
