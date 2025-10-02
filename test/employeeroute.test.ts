@@ -51,4 +51,15 @@ describe("Employee API Endpoints", () => {
     const res = await request(app).get("/api/v1/employees/99999");
     expect(res.status).toBe(404);
     expect(res.body).toHaveProperty("message", "Employee not found");
+  });
+
+  // 6️ Update Employee - success
+  it("should update an employee successfully", async () => {
+    const res = await request(app)
+      .put(`/api/v1/employees/${employeeId}`)
+      .send({ phone: "111-222-3333" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.phone).toBe("111-222-3333");
   });})
+
