@@ -61,5 +61,13 @@ describe("Employee API Endpoints", () => {
 
     expect(res.status).toBe(200);
     expect(res.body.phone).toBe("111-222-3333");
+  });
+  
+  // 7️ Update Employee - no data
+  it("should return 400 when updating with no data", async () => {
+    const res = await request(app).put(`/api/v1/employees/${employeeId}`).send({});
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", "No update data provided");
   });})
+
 
