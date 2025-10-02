@@ -78,7 +78,14 @@ describe("Employee API Endpoints", () => {
 
     expect(res.status).toBe(404);
     expect(res.body).toHaveProperty("message", "Employee not found");
-  });})
+  });
+
+  // 9️ Delete Employee - success
+  it("should delete an employee successfully", async () => {
+    const res = await request(app).delete(`/api/v1/employees/${employeeId}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("message", "Employee deleted successfully");
+  });
 
 
 
