@@ -18,4 +18,13 @@ describe("Branch API Endpoints", () => {
     expect(res.body).toHaveProperty("id");
     expect(res.body.name).toBe("Downtown Branch");
     branchId = res.body.id;
+  });
+  // 2️ Create Employee - missing params
+  it("should return 400 when creating an employee with missing fields", async () => {
+    const res = await request(app).post("/api/v1/employees").send({
+      name: "Jane Doe",
+    });
+
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", "Missing required fields");
   });})
