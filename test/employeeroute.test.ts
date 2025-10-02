@@ -44,4 +44,11 @@ describe("Employee API Endpoints", () => {
     const res = await request(app).get(`/api/v1/employees/${employeeId}`);
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("id", employeeId);
+  });
+
+  // 5️ Get Employee by ID - not found
+  it("should return 404 for a non-existent employee ID", async () => {
+    const res = await request(app).get("/api/v1/employees/99999");
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message", "Employee not found");
   });})
