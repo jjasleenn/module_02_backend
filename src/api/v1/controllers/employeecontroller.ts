@@ -79,3 +79,24 @@ export const deleteEmployee = (req: Request, res: Response): void => {
   res.status(200).json({ message: "Employee deleted successfully" });
 };
 
+export const getEmployeesByBranch = (req: Request, res: Response): void => {
+  const branchId = Number(req.params.branchId);
+  if (!branchId) {
+    res.status(400).json({ message: "Branch ID is required" });
+    return;
+  }
+
+  const employees = employeeService.getEmployeesByBranch(branchId);
+  res.status(200).json(employees);
+};
+
+export const getEmployeesByDepartment = (req: Request, res: Response): void => {
+  const department = req.params.department;
+  if (!department) {
+    res.status(400).json({ message: "Department is required" });
+    return;
+  }
+
+  const employees = employeeService.getEmployeesByDepartment(department);
+  res.status(200).json(employees);
+};
