@@ -19,26 +19,81 @@ describe("Branch API Endpoints", () => {
     expect(res.body.name).toBe("Downtown Branch");
     branchId = res.body.id;
   });
-  // 2️ Create Employee - missing params
-  it("should return 400 when creating an employee with missing fields", async () => {
-    const res = await request(app).post("/api/v1/employees").send({
-      name: "Jane Doe",
-    });
+
+  // 2️ Create Branch - missing params
+  it("should return 400 when creating a branch with missing parameters", async () => {
+    const res = await request(app)
+      .post("/api/v1/branches")
+      .send({
+        // Missing name
+        address: "456 Elm St"
+      });
 
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty("message", "Missing required fields");
   });
-   // 3️ Get All Employees
-  it("should get all employees", async () => {
-    const res = await request(app).get("/api/v1/employees");
+
+  // 3️ Get All Branches - success
+  it("should get all branches", async () => {
+    const res = await request(app).get("/api/v1/branches");
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBeTruthy();
     expect(res.body.length).toBeGreaterThan(0);
   });
-  // 4️ Get Employee by ID - success
-  it("should get an employee by ID", async () => {
-    const res = await request(app).get(`/api/v1/employees/${employeeId}`);
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty("id", employeeId);
-  });})
 
+  // 4️ Get Branch by ID - success
+  it("should get a branch by ID", async () => {
+    const res = await request(app).get(`/api/v1/branches/${branchId}`);
+    expect(res.status).toBe(200);
+    expect(res.body.id).toBe(branchId);
+  });
+
+  // 5️ Get Branch by ID - invalid ID
+  it("should return 404 for a non-existent branch ID", async () => {
+    const res = await request(app).get("/api/v1/branches/99999");
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message", "Branch not found");
+  });
+
+  // 6️ Update Branch - success
+  it("should update a branch successfully", async () => {
+    const res = await request(app)
+      .put(`/api/v1/branches/${branchId}`)
+      .send({ phone: "987-654-3210" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.phone).toBe("987-654-3210");
+  });
+
+  // 7️ Update Branch - missing params
+  it("should return 400 when updating a branch with no data", async () => {
+    const res = await request(app)
+      .put(`/api/v1/branches/${branchId}`)
+      .send({});
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", "No update data provided");
+  });
+
+  // 8️ Update Branch - invalid ID
+  it("should return 404 when updating a non-existent branch", async () => {
+    const res = await request(app)
+      .put("/api/v1/branches/99999")
+      .send({ phone: "000-000-0000" });
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message", "Branch not found");
+  });
+
+  // 9️ Delete Branch - success
+  it("should delete a branch successfully", async () => {
+    const res = await request(app).delete(`/api/v1/branches/${branchId}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("message", "Branch deleted successfully");
+  });
+
+  // 10 Delete Branch - invalid ID
+  it("should return 404 when deleting a non-existent branch", async () => {
+    const res = await request(app).delete("/api/v1/branches/99999");
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message", "Branch not found");
+  });
+});
