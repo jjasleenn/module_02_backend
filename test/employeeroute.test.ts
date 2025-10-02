@@ -29,4 +29,12 @@ describe("Employee API Endpoints", () => {
 
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty("message", "Missing required fields");
+  });
+
+  // 3️ Get All Employees
+  it("should get all employees", async () => {
+    const res = await request(app).get("/api/v1/employees");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBeTruthy();
+    expect(res.body.length).toBeGreaterThan(0);
   });})
