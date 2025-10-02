@@ -37,4 +37,11 @@ describe("Employee API Endpoints", () => {
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBeTruthy();
     expect(res.body.length).toBeGreaterThan(0);
+  });
+
+  // 4️ Get Employee by ID - success
+  it("should get an employee by ID", async () => {
+    const res = await request(app).get(`/api/v1/employees/${employeeId}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("id", employeeId);
   });})
