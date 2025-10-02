@@ -87,5 +87,13 @@ describe("Employee API Endpoints", () => {
     expect(res.body).toHaveProperty("message", "Employee deleted successfully");
   });
 
+   // 10 Delete Employee - not found
+  it("should return 404 when deleting a non-existent employee", async () => {
+    const res = await request(app).delete("/api/v1/employees/99999");
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message", "Employee not found");
+  });
+});
+
 
 
