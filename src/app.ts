@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(morgan("combined"));
 
 // Health check route
-app.get("/health", (req, res) => {
+app.get("/", (req, res) => {
   res.status(200).send("Server is healthy");
 });
 

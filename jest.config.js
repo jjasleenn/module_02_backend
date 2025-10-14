@@ -8,3 +8,9 @@ module.exports = {
         "!src/types/**/*.ts", // Exclude type definitions
     ],
 };
+
+module.exports = {
+    preset: "ts-jest",
+    testEnvironment: "node",
+    setupFilesAfterEnv: ["<rootDir>/test/jest.setup.ts"],
+};
