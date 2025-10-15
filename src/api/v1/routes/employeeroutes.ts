@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as employeeController from "../controllers/employeecontroller";
-
+import { createEmployeeSchema, updateEmployeeSchema } from '../validation/employeevalidation';
+import { validate } from "../middleware/validationmiddleware";
 
 const router = Router();
 
@@ -13,5 +14,7 @@ router.delete("/:id", employeeController.deleteEmployee);
 router.get("/branch/:branchId", employeeController.getEmployeesByBranch);
 router.get("/department/:department", employeeController.getEmployeesByDepartment);
 
+router.post('/', validate(createEmployeeSchema), employeeController.createEmployee);
+router.put('/:id', validate(updateEmployeeSchema), employeeController.updateEmployee);
 
 export default router;
