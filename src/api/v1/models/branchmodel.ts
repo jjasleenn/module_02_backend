@@ -1,8 +1,18 @@
 export interface Branch {
-       id: string;
-       name: string;
-       address: string;
-       phone: string;
-       createdAt: Date;
-       updatedAt: Date;
-   }
+    id: number;
+    name: string;
+    address: string;
+    phone: string;
+}
+
+export interface CreateBranchDto {
+    name: string;
+    address: string;
+    phone: string;
+}
+
+export interface UpdateBranchDto {
+    name?: string;
+    address?: string;
+    phone?: string;
+}
