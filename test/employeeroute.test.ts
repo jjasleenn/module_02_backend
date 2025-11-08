@@ -1,0 +1,99 @@
+import request from "supertest";
+import app from "../src/app";
+
+describe("Employee API Endpoints", () => {
+  let employeeId: number;
+
+  // 1 Create Employee - success
+  it("should create an employee successfully", async () => {
+    const res = await request(app).post("/api/v1/employees").send({
+      name: "John Doe",
+      position: "Software Engineer",
+      department: "IT",
+      email: "johndoe@example.com",
+      phone: "123-456-7890",
+      branchId: 1,
+    });
+
+    expect(res.status).toBe(201);
+    expect(res.body).toHaveProperty("id");
+    expect(res.body.name).toBe("John Doe");
+    employeeId = res.body.id;
+  });
+
+   // 2️ Create Employee - missing params  
+  it("should return 400 when creating an employee with missing fields", async () => {
+    const res = await request(app).post("/api/v1/employees").send({
+      name: "Jane Doe",
+    });
+
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", "Missing required fields");
+  });
+
+  // 3️ Get All Employees
+  it("should get all employees", async () => {
+    const res = await request(app).get("/api/v1/employees");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBeTruthy();
+    expect(res.body.length).toBeGreaterThan(0);
+  });
+
+  // 4️ Get Employee by ID - success
+  it("should get an employee by ID", async () => {
+    const res = await request(app).get(`/api/v1/employees/${employeeId}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("id", employeeId);
+  });
+
+  // 5️ Get Employee by ID - not found
+  it("should return 404 for a non-existent employee ID", async () => {
+    const res = await request(app).get("/api/v1/employees/99999");
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message", "Employee not found");
+  });
+
+  // 6️ Update Employee - success
+  it("should update an employee successfully", async () => {
+    const res = await request(app)
+      .put(`/api/v1/employees/${employeeId}`)
+      .send({ phone: "111-222-3333" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.phone).toBe("111-222-3333");
+  });
+
+  // 7️ Update Employee - no data
+  it("should return 400 when updating with no data", async () => {
+    const res = await request(app).put(`/api/v1/employees/${employeeId}`).send({});
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", "No update data provided");
+  });
+
+   // 8️ Update Employee - not found
+  it("should return 404 when updating a non-existent employee", async () => {
+    const res = await request(app)
+      .put("/api/v1/employees/99999")
+      .send({ phone: "000-000-0000" });
+
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message", "Employee not found");
+  });
+
+  // 9️ Delete Employee - success
+  it("should delete an employee successfully", async () => {
+    const res = await request(app).delete(`/api/v1/employees/${employeeId}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveProperty("message", "Employee deleted successfully");
+  });
+
+   // 10 Delete Employee - not found
+  it("should return 404 when deleting a non-existent employee", async () => {
+    const res = await request(app).delete("/api/v1/employees/99999");
+    expect(res.status).toBe(404);
+    expect(res.body).toHaveProperty("message", "Employee not found");
+  });
+});
+
+
+
