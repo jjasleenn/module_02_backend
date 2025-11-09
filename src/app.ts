@@ -2,8 +2,9 @@ import express from "express";
 import morgan from "morgan";
 import employeeRoutes from "./api/v1/routes/employeeroutes";
 import branchRoutes from "./api/v1/routes/branchroutes";
+import dotenv from "dotenv";
 
-
+dotenv.config();
 const app = express();
 
 // Middleware
