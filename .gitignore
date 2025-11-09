@@ -1,3 +1,5 @@
 node_modules/
 dist/
 serviceAccountKey.json
+.env
+module_03.zip/
