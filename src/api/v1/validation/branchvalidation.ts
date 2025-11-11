@@ -37,6 +37,8 @@ import Joi from 'joi';
    });
 /**
  * @openapi
+ * components:
+ *   schemas:
  *      UpdateEmployee:
  *       type: object
  *       properties:
