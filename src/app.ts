@@ -3,6 +3,7 @@ import morgan from "morgan";
 import employeeRoutes from "./api/v1/routes/employeeroutes";
 import branchRoutes from "./api/v1/routes/branchroutes";
 import dotenv from "dotenv";
+import { gethelmetconfig } from "../config/helmetconfig";
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/employees", employeeRoutes);
 app.use("/api/v1/branches", branchRoutes);
 
+app.use(gethelmetconfig());
 
 export default app;
 
