@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import { gethelmetconfig } from "../config/helmetconfig";
 import cors from "cors";
 import { getCorsOptions } from "../config/cors";
+import {publicCorsOptions,authenticatedCorsOptions,} from "../config/corsoption";
+import setupSwagger from "../config/swagger";
 
 dotenv.config();
 const app = express();
@@ -25,6 +27,16 @@ app.use("/api/v1/branches", branchRoutes);
 
 app.use(gethelmetconfig());
 app.use(cors(getCorsOptions()));
+
+// Public endpoints — relaxed CORS
+app.use("/api/v1/health", cors(publicCorsOptions));
+app.use("/api-docs", cors(publicCorsOptions));
+
+//Authenticated endpoints — strict CORS
+app.use("/api/v1/users", cors(authenticatedCorsOptions));
+app.use("/api/v1/admin", cors(authenticatedCorsOptions));
+
+setupSwagger(app);
 
 export default app;
 
