@@ -41,6 +41,7 @@ import Joi from 'joi';
  *           description: Employee phone number
  *           example: "+1 (555) 765-4321"
  */
+
    export const createEmployeeSchema = Joi.object({
        name: Joi.string().min(2).max(100).required(),
        email: Joi.string().email().required(),
@@ -53,7 +54,7 @@ import Joi from 'joi';
  * @openapi
  * components:
  *   schemas:
- *      UpdateEmployee:
+ *     UpdateEmployee:
  *       type: object
  *       properties:
  *         name:

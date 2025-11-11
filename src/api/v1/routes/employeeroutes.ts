@@ -101,6 +101,8 @@ router.put('/:id', validate(updateEmployeeSchema), employeeController.updateEmpl
  *     responses:
  *       '204':
  *         description: Employee deleted successfully
+ *       '404':
+ *         description: Employee not found
  */
 router.delete("/:id", employeeController.deleteEmployee);
 /**
@@ -118,6 +120,12 @@ router.delete("/:id", employeeController.deleteEmployee);
  *     responses:
  *       '200':
  *         description: Employees retrieved for this branch
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/CreateEmployee'
  */
 router.get("/branch/:branchId", employeeController.getEmployeesByBranch);
 /**
@@ -135,6 +143,12 @@ router.get("/branch/:branchId", employeeController.getEmployeesByBranch);
  *     responses:
  *       '200':
  *         description: Employees retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/CreateEmployee'
  */
 router.get("/department/:department", employeeController.getEmployeesByDepartment);
 

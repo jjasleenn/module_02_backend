@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "gen:openapi": "ts-node scripts/generate-openapi.ts",
+    "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html",
     "test": "jest",
     "start": "ts-node src/server.ts"
   },
@@ -20,12 +22,13 @@
   },
   "homepage": "https://github.com/jjasleenn/module_02_backend#readme",
   "devDependencies": {
+    "@redocly/cli": "^2.11.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/jest": "^30.0.0",
     "@types/joi": "^17.2.2",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^24.6.0",
+    "@types/node": "^24.10.0",
     "@types/supertest": "^6.0.3",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",

@@ -6,13 +6,6 @@ const router = Router();
 // CRUD routes for branches
 /**
  * @openapi
- * tags:
- *   name: Branches
- *   description: API endpoints for managing business branches
- */
-
-/**
- * @openapi
  * /branches:
  *   get:
  *     summary: Retrieve all branches
@@ -25,7 +18,7 @@ const router = Router();
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Branch'
+ *                 $ref: '#/components/schemas/CreateBranch'
  */
 router.get("/", branchController.getAllBranches);
 /**
@@ -47,7 +40,7 @@ router.get("/", branchController.getAllBranches);
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Branch'
+ *               $ref: '#/components/schemas/CreateBranch'
  *       '404':
  *         description: Branch not found
  */
@@ -68,22 +61,14 @@ router.get("/:id", branchController.getBranchById);
  *     responses:
  *       '201':
  *         description: Branch created successfully
- *       '400':
- *         description: Invalid request body
  */
 router.post("/", branchController.createBranch);
 /**
  * @openapi
  * /branches/{id}:
  *   put:
- *     summary: Update a branch by ID
+ *     summary: Update an existing branch
  *     tags: [Branches]
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -93,8 +78,6 @@ router.post("/", branchController.createBranch);
  *     responses:
  *       '200':
  *         description: Branch updated successfully
- *       '404':
- *         description: Branch not found
  */
 router.put("/:id", branchController.updateBranch);
 /**
