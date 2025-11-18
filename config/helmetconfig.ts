@@ -30,4 +30,3 @@ export const gethelmetconfig = () => {
         referrerPolicy: { policy: "no-referrer" },
     });
 };
-
