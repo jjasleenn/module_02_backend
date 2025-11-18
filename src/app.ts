@@ -16,6 +16,11 @@ const app = express();
 app.use(express.json());
 app.use(morgan("combined"));
 
+app.use(gethelmetconfig());
+
+app.use(cors(getCorsOptions()));
+
+
 // Health check route
 app.get("/", (req, res) => {
   res.status(200).send("Server is healthy");
@@ -24,9 +29,6 @@ app.get("/", (req, res) => {
 // API routes
 app.use("/api/v1/employees", employeeRoutes);
 app.use("/api/v1/branches", branchRoutes);
-
-app.use(gethelmetconfig());
-app.use(cors(getCorsOptions()));
 
 // Public endpoints — relaxed CORS
 app.use("/api/v1/health", cors(publicCorsOptions));
