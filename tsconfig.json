@@ -4,6 +4,7 @@
         "module": "commonjs",
         "strict": true,
         "esModuleInterop": true,
+        "types": ["node"],
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "outDir": "./dist",
@@ -19,6 +20,6 @@
             "*": ["*"]
         }
     },
-    "include": ["src/**/*", "test/**/*", "config/**/*"],
+    "include": ["src/**/*", "test/**/*", "config/**/*", "scripts/**/*"],
     "exclude": ["node_modules", "dist"]
 }
